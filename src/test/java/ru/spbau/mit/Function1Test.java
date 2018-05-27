@@ -24,15 +24,15 @@ public class Function1Test {
     Inc inc = new Inc();
     @Test
     public void testRun() {
-        assertTrue(100 == sq.run(10));
-        assertTrue(100 == sq.run(-10));
+        assertEquals(100, (long) sq.run(10));
+        assertEquals(100, (long) sq.run(-10));
     }
 
     @Test
     public void testCompose() {
         Function1<Integer, Integer> tmp = sq.compose(inc);
-        assertTrue(5 == tmp.run(2));
+        assertEquals(5, (long) tmp.run(2));
         tmp = inc.compose(sq);
-        assertTrue(9 == tmp.run(2));
+        assertEquals(9, (long) tmp.run(2));
     }
 }
