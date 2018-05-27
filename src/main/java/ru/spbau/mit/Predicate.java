@@ -4,14 +4,14 @@ public abstract class Predicate<T> {
 
     public abstract boolean run(T obj);
 
-    static public Predicate ALWAYS_TRUE = new Predicate() {
+    static public Predicate<Object> ALWAYS_TRUE = new Predicate() {
         @Override
         public boolean run(Object obj) {
             return true;
         }
     };
 
-    static public Predicate ALWAYS_FALSE = new Predicate() {
+    static public Predicate<Object> ALWAYS_FALSE = new Predicate() {
         @Override
         public boolean run(Object obj) {
             return false;
