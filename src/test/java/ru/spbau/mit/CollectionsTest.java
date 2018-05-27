@@ -2,6 +2,7 @@ package ru.spbau.mit;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -114,4 +115,56 @@ public class CollectionsTest {
         assertEquals(out2, -45);
     }
 
+    @Test
+    public void someExtendSuperClass() throws Exception {
+        class A{
+            {
+                a = 1;
+            }
+            int a;
+
+            @Override
+            public boolean equals(Object o) {
+                if (o instanceof A) {
+                    return a == ((A) o).a;
+                }
+                return false;
+            }
+        }
+        class B extends A{
+            B(int a) {
+                this.a = a;
+            }
+            @Override
+            public boolean equals(Object o) {
+                return super.equals(o);
+            }
+        }
+
+        class C extends B{
+            C(int a) {
+                super(a);
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                return super.equals(o);
+            }
+        }
+        class polyPlus extends Function2<A, B, C>
+        {
+            @Override
+            public C run(A first, B second) {
+                return new C(first.a + second.a);
+            }
+        }
+
+        C init = new C(0);
+        ArrayList<A> test = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            test.add(new A());
+        }
+        B res = Collections.foldr(new polyPlus(), test, init);
+        assertEquals(res.a, 10);
+    }
 }
